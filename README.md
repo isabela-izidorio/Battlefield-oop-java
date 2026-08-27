@@ -1,47 +1,43 @@
-## Apresentação
+# Turn-Based Combat Simulator | Simulador de Combate por Turnos
 
-Simulador de combate por turnos construído em Java, focado na aplicação prática de POO: Herança, Polimorfismo, Interfaces e Encapsulamento.
-Projeto de estudo.
+A Java-based turn-based combat simulator focused on practical Object-Oriented Programming (OOP): Inheritance, Polymorphism, Interfaces, and Encapsulation.
 
-## Regras de Negócio e Dinâmicas
+Simulador de combate por turnos desenvolvido em Java, com foco na aplicação prática de POO: Herança, Polimorfismo, Interfaces e Encapsulamento.
 
-### Núcleo de Personagem (Base)
+> Study project | Projeto de estudo
 
-* Gestão de Recursos: Todos iniciam com 100 de Vida e 100 de Energia.
+## Business Rules | Regras de Negócio
 
-* Integridade de Dados: Vida e Energia não recebem valores negativos.
+### Character Core | Núcleo de Personagem
 
-* Mecânica de Dano: Personagens em estado de defesa reduzem o dano recebido em 50%. Após sofrer o ataque, a defesa é resetada automaticamente.
+- **Resources | Recursos:** All characters start with 100 HP and 100 Energy.
+- **Data Integrity | Integridade:** HP and Energy cannot have negative values.
+- **Damage | Dano:** Defending characters receive 50% less damage. Defense resets after being attacked.
 
-### Especializações (Lutadores)
+### Fighters | Lutadores
 
-* ####  Bruxa (Elemental/Suporte):
+#### Witch | Bruxa
 
-Restrição: Só pode operar um dos 5 elementos (Fogo, Água, Terra, Ar, Éter).
+- **Element | Elemento:** Can operate with one of five elements: Fire, Water, Earth, Air, or Aether.
+- **Defense | Defesa:** Can spend energy to defend any other character.
+- **Soul Drain | Dreno de Alma:** Special ability deals damage and restores her own HP.
 
-Habilidade Única: Pode gastar energia para defender qualquer outro personagem (mesmo não-lutadores).
+#### Demon | Demônio
 
-Auto-cura: Sua habilidade especial causa dano e recupera sua própria vida (Dreno de Alma).
+- **Evil Level | Nível de Maldade:** Damage scales with Evil Level, from 1 to 10.
+- **Rage | Fúria:** Gains +10 damage when HP falls below 30.
+- **Sacrifice | Sacrifício:** Special ability deals massive damage at the cost of the Demon's own HP.
 
-* ####  Demônio (Ofensivo/Risco):
+#### Passive Characters | Personagens Passivos
 
-Escalabilidade: O dano aumenta conforme seu Nível de Maldade (limitado de 1 a 10).
+**Villager | Aldeão:** Has no combat abilities and does not implement the `Lutador` interface. Interactions are limited to dialogues and specific professions, such as Blacksmith and Carpenter.
 
-Estado de Fúria: Quando a vida cai abaixo de 30, ganha um bônus de +10 de dano.
+## Class Diagram | Diagrama de Classes
 
-Sacrifício: Seu especial causa dano massivo, mas consome a própria vida do Demônio.
-
-* ####  Personagens Passivos
-
-Aldeão: Não possui habilidades de combate (não implementa a interface Lutador). Sua interação é limitada a diálogos e profissões específicas (Ferreiro/Carpinteiro).
-
-
-## Diagrama de Classes
-
-```text
+```
                     +-----------------------+
                     |     <<Abstract>>      |
-                    |      Personagem       | 
+                    |      Personagem       |
                     +-----------------------+
                     | - nome: String        |
                     | - vida: int           |
@@ -54,7 +50,7 @@ Aldeão: Não possui habilidades de combate (não implementa a interface Lutador
                                 |
         ________________________|________________________
        |                        |                        |
- (Herança)                (Herança)                (Herança)
+ (Inheritance)             (Inheritance)            (Inheritance)
        |                        |                        |
 +--------------------+   +--------------------+   +-----------------+
 |        Aldeao      |   |        Bruxa       |   |     Demonio     |
@@ -64,7 +60,7 @@ Aldeão: Não possui habilidades de combate (não implementa a interface Lutador
 | + interagir()      |   | +defenderTerceiro()|   |                 |
 +--------------------+   +-----+--------------+   +-----+-----------+
                                |                        |
-                               |      (Implementam)     |
+                               |      (Implements)      |
                                \___________  ___________/
                                            |
                                            v
@@ -76,4 +72,11 @@ Aldeão: Não possui habilidades de combate (não implementa a interface Lutador
                                 | + usarEspecial(alvo)  |
                                 | + defender()          |
                                 +-----------------------+
+```
 
+## OOP Concepts | Conceitos de POO
+
+- **Inheritance | Herança** — Specialized characters inherit from `Personagem`.
+- **Polymorphism | Polimorfismo** — Different characters implement behaviors in their own way.
+- **Interfaces | Interfaces** — Combat abilities are defined by the `Lutador` interface.
+- **Encapsulation | Encapsulamento** — Character attributes and resource management are controlled by the base class.
